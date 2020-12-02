@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer } from "react";
 
 function Button() {
   const Value = [
@@ -15,15 +15,15 @@ function Button() {
       id: "multiply",
     },
     {
-      text: "7",
+      text: 7,
       id: "seven",
     },
     {
-      text: "8",
+      text: 8,
       id: "eight",
     },
     {
-      text: "9",
+      text: 9,
       id: "nine",
     },
     {
@@ -31,15 +31,15 @@ function Button() {
       id: "subtract",
     },
     {
-      text: "4",
+      text: 4,
       id: "four",
     },
     {
-      text: "5",
+      text: 5,
       id: "five",
     },
     {
-      text: "6",
+      text: 6,
       id: "six",
     },
     {
@@ -47,15 +47,15 @@ function Button() {
       id: "addition",
     },
     {
-      text: "1",
+      text: 1,
       id: "one",
     },
     {
-      text: "2",
+      text: 2,
       id: "two",
     },
     {
-      text: "3",
+      text: 3,
       id: "three",
     },
     {
@@ -63,7 +63,7 @@ function Button() {
       id: "equal",
     },
     {
-      text: "0",
+      text: 0,
       id: "zero",
     },
     {
@@ -71,11 +71,26 @@ function Button() {
       id: "decimal",
     },
   ];
+  const reducer = (action, state) => {
+    return state;
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const handleClick = (e) => {
+    const { value } = e.target;
+    console.log(value);
+  };
   return (
     <div className="panel">
       {Value.map((value) => {
         return (
-          <button key={value.id} id={value.id}>
+          <button
+            key={value.id}
+            id={value.id}
+            value={value.text}
+            onClick={handleClick}
+          >
             {value.text}
           </button>
         );
