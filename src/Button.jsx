@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useState } from "react";
 
 function Button() {
   const Value = [
@@ -71,31 +71,83 @@ function Button() {
       id: "decimal",
     },
   ];
-  const reducer = (action, state) => {
-    return state;
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [previous, setprevious] = useState(null);
+  const [current, setcurrent] = useState(0);
+  const [operator, setoperator] = useState(null);
+  const [result, setresult] = useState(null);
 
   const handleClick = (e) => {
     const { value } = e.target;
-    console.log(value);
+
+    const num = Number(current);
+
+    if (value === "AC") {
+      setresult("0");
+      setcurrent("0");
+      setprevious("");
+      setoperator("");
+    }
+    //operator formular
+    else if (value === "+") {
+      setoperator("+");
+      setprevious(current);
+      setcurrent(0);
+    } else if (value === "-") {
+      setoperator("-");
+      setprevious(current);
+      setcurrent(0);
+    } else if (value === "/") {
+      setoperator("/");
+      setprevious(current);
+      setcurrent(0);
+    } else if (value === "*") {
+      setoperator("*");
+      setprevious(current);
+      setcurrent(0);
+    }
+    //equal formular
+    else if (value === "=") {
+      if (operator === "+") {
+        setresult((previous + Number(current)).toString());
+      } else if (operator === "-") {
+        setresult((previous - Number(current)).toString());
+      } else if (operator === "/") {
+        setresult((previous / Number(current)).toString());
+      } else if (operator === "*") {
+        setresult((previous * Number(current)).toString());
+      } else {
+        setresult(current.toString());
+      }
+    } else {
+      setcurrent(Number(num + value));
+    }
   };
+
   return (
-    <div className="panel">
-      {Value.map((value) => {
-        return (
-          <button
-            key={value.id}
-            id={value.id}
-            value={value.text}
-            onClick={handleClick}
-          >
-            {value.text}
-          </button>
-        );
-      })}
-    </div>
+    <>
+      <div id="display">
+        <div className="value">
+          <span>{previous} </span>
+          <span>{operator}</span>
+          <span> {current}</span>
+        </div>
+        <div className="result">{result}</div>
+      </div>
+      <div className="panel">
+        {Value.map((value) => {
+          return (
+            <button
+              key={value.id}
+              id={value.id}
+              value={value.text}
+              onClick={handleClick}
+            >
+              {value.text}
+            </button>
+          );
+        })}
+      </div>
+    </>
   );
 }
 
