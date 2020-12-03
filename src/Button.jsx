@@ -72,39 +72,105 @@ function Button() {
     },
   ];
   const [previous, setprevious] = useState(null);
-  const [current, setcurrent] = useState(0);
+  const [current, setcurrent] = useState("");
   const [operator, setoperator] = useState(null);
   const [result, setresult] = useState(null);
 
   const handleClick = (e) => {
     const { value } = e.target;
 
-    const num = Number(current);
+    const num = current;
 
     if (value === "AC") {
-      setresult("0");
-      setcurrent("0");
+      setresult("");
+      setcurrent("");
       setprevious("");
       setoperator("");
     }
-    //operator formular
+
+    //operator formular +
     else if (value === "+") {
+      if (operator !== null) {
+        if (operator === "+") {
+          setprevious(previous + Number(current));
+        } else if (operator === "-") {
+          setprevious(previous - Number(current));
+        } else if (operator === "/") {
+          setprevious(previous / Number(current));
+        } else if (operator === "*") {
+          setprevious(previous * Number(current));
+        } else {
+          setprevious(parseFloat(current));
+        }
+      } else {
+        setprevious(parseFloat(current));
+      }
       setoperator("+");
-      setprevious(current);
-      setcurrent(0);
-    } else if (value === "-") {
-      setoperator("-");
-      setprevious(current);
-      setcurrent(0);
-    } else if (value === "/") {
-      setoperator("/");
-      setprevious(current);
-      setcurrent(0);
-    } else if (value === "*") {
-      setoperator("*");
-      setprevious(current);
-      setcurrent(0);
+      setcurrent("");
     }
+
+    //operator formular -
+    else if (value === "-") {
+      if (operator !== null) {
+        if (operator === "+") {
+          setprevious(previous + Number(current));
+        } else if (operator === "-") {
+          setprevious(previous - Number(current));
+        } else if (operator === "/") {
+          setprevious(previous / Number(current));
+        } else if (operator === "*") {
+          setprevious(previous * Number(current));
+        } else {
+          setprevious(parseFloat(current));
+        }
+      } else {
+        setprevious(parseFloat(current));
+      }
+      setoperator("-");
+      setcurrent("");
+    }
+    // operator formular /
+    else if (value === "/") {
+      if (operator !== null) {
+        if (operator === "+") {
+          setprevious(previous + Number(current));
+        } else if (operator === "-") {
+          setprevious(previous - Number(current));
+        } else if (operator === "/") {
+          setprevious(previous / Number(current));
+        } else if (operator === "*") {
+          setprevious(previous * Number(current));
+        } else {
+          setprevious(parseFloat(current));
+        }
+      } else {
+        setprevious(parseFloat(current));
+      }
+      setoperator("/");
+      setcurrent("");
+    }
+
+    //operator formular *
+    else if (value === "*") {
+      if (operator !== null) {
+        if (operator === "+") {
+          setprevious(previous + Number(current));
+        } else if (operator === "-") {
+          setprevious(previous - Number(current));
+        } else if (operator === "/") {
+          setprevious(previous / Number(current));
+        } else if (operator === "*") {
+          setprevious(previous * Number(current));
+        } else {
+          setprevious(parseFloat(current));
+        }
+      } else {
+        setprevious(parseFloat(current));
+      }
+      setoperator("*");
+      setcurrent("");
+    }
+
     //equal formular
     else if (value === "=") {
       if (operator === "+") {
@@ -119,7 +185,17 @@ function Button() {
         setresult(current.toString());
       }
     } else {
-      setcurrent(Number(num + value));
+      console.log(current.length);
+      console.log(current.match(/\.+/));
+      if (current.includes(".")) {
+        if (current.match(/\./g).length > 1) {
+          setcurrent(current.replace(/.$/, ""));
+        } else {
+          setcurrent(num + value);
+        }
+      } else {
+        setcurrent(num + value);
+      }
     }
   };
 
