@@ -81,117 +81,147 @@ function Button() {
 
     const num = current;
 
-    if (value === "AC") {
-      setresult("");
-      setcurrent("");
-      setprevious("");
-      setoperator("");
-    }
-
-    //operator formular +
-    else if (value === "+") {
-      if (operator !== null) {
-        if (operator === "+") {
-          setprevious(previous + Number(current));
-        } else if (operator === "-") {
-          setprevious(previous - Number(current));
-        } else if (operator === "/") {
-          setprevious(previous / Number(current));
-        } else if (operator === "*") {
-          setprevious(previous * Number(current));
-        } else {
-          setprevious(parseFloat(current));
-        }
+    if (current === 0 || "") {
+      if (value === "+") {
+        setcurrent("+");
+      } else if (value === "-") {
+        setcurrent("-");
+      } else if (value === "*") {
+        setcurrent("");
+      } else if (value === "/") {
+        setcurrent("");
+      } else if (value === "AC") {
+        setprevious("");
+        setresult(0);
+        setoperator("");
+        setcurrent(0);
       } else {
-        setprevious(parseFloat(current));
-      }
-      setoperator("+");
-      setcurrent("");
-    }
-
-    //operator formular -
-    else if (value === "-") {
-      if (operator !== null) {
-        if (operator === "+") {
-          setprevious(previous + Number(current));
-        } else if (operator === "-") {
-          setprevious(previous - Number(current));
-        } else if (operator === "/") {
-          setprevious(previous / Number(current));
-        } else if (operator === "*") {
-          setprevious(previous * Number(current));
-        } else {
-          setprevious(parseFloat(current));
-        }
-      } else {
-        setprevious(parseFloat(current));
-      }
-      setoperator("-");
-      setcurrent("");
-    }
-    // operator formular /
-    else if (value === "/") {
-      if (operator !== null) {
-        if (operator === "+") {
-          setprevious(previous + Number(current));
-        } else if (operator === "-") {
-          setprevious(previous - Number(current));
-        } else if (operator === "/") {
-          setprevious(previous / Number(current));
-        } else if (operator === "*") {
-          setprevious(previous * Number(current));
-        } else {
-          setprevious(parseFloat(current));
-        }
-      } else {
-        setprevious(parseFloat(current));
-      }
-      setoperator("/");
-      setcurrent("");
-    }
-
-    //operator formular *
-    else if (value === "*") {
-      if (operator !== null) {
-        if (operator === "+") {
-          setprevious(previous + Number(current));
-        } else if (operator === "-") {
-          setprevious(previous - Number(current));
-        } else if (operator === "/") {
-          setprevious(previous / Number(current));
-        } else if (operator === "*") {
-          setprevious(previous * Number(current));
-        } else {
-          setprevious(parseFloat(current));
-        }
-      } else {
-        setprevious(parseFloat(current));
-      }
-      setoperator("*");
-      setcurrent("");
-    }
-
-    //equal formular
-    else if (value === "=") {
-      if (operator === "+") {
-        setresult((previous + Number(current)).toString());
-      } else if (operator === "-") {
-        setresult((previous - Number(current)).toString());
-      } else if (operator === "/") {
-        setresult((previous / Number(current)).toString());
-      } else if (operator === "*") {
-        setresult((previous * Number(current)).toString());
-      } else {
-        setresult(current.toString());
+        setcurrent(num + value);
       }
     } else {
-      console.log(current.length);
-      console.log(current.match(/\.+/));
-      if (current.includes(".")) {
-        if (current.match(/\./g).length > 1) {
-          setcurrent(current.replace(/.$/, ""));
+      if (value === "AC") {
+        setresult(0);
+        setprevious("");
+        setcurrent(0);
+        setoperator("");
+      }
+      //operator formular for +
+      else if (value === "+") {
+        if (operator !== null) {
+          if (operator === "+") {
+            setprevious(previous + Number(current));
+          } else if (operator === "-") {
+            setprevious(previous - Number(-current));
+          } else if (operator === "/") {
+            if (current === "" || 0) {
+              setprevious(previous / 1);
+            } else {
+              setprevious(previous / Number(current));
+            }
+          } else if (operator === "*") {
+            if (current === "" || 0) {
+              setprevious(previous * 1);
+            } else {
+              setprevious(previous * Number(current));
+            }
+          } else {
+            setprevious(parseFloat(current));
+          }
         } else {
-          setcurrent(num + value);
+          setprevious(parseFloat(current));
+        }
+        setcurrent("");
+        setoperator("+");
+      }
+
+      //operator formular -
+      else if (value === "-") {
+        if (operator !== null) {
+          if (operator === "+") {
+            setprevious(previous + Number(current));
+            setcurrent("");
+          } else if (operator === "-") {
+            setprevious(previous - Number(current));
+            setcurrent("");
+          } else if (operator === "/") {
+            if (current === "" || 0) {
+              setprevious(previous / 1);
+            } else {
+              setprevious(previous / Number(current));
+            }
+            setcurrent("");
+          } else if (operator === "*") {
+            if (current === "" || 0) {
+              setprevious(previous * 1);
+            } else {
+              setprevious(previous * Number(current));
+            }
+            setcurrent(num + value);
+          } else {
+            setprevious(parseFloat(current));
+            setcurrent("");
+          }
+        } else {
+          setprevious(parseFloat(current));
+          setcurrent("");
+        }
+        setoperator("-");
+        setcurrent("");
+      }
+
+      //operator formular -
+      else if (value === "*") {
+        if (operator !== null) {
+          if (operator === "+") {
+            setprevious(previous + Number(current));
+          } else if (operator === "-") {
+            setprevious(previous - Number(current));
+          } else if (operator === "/") {
+            setprevious(previous / Number(current));
+          } else if (operator === "*") {
+            setprevious(previous * Number(current));
+          } else {
+            setprevious(parseFloat(current));
+          }
+        } else {
+          setprevious(parseFloat(current));
+        }
+        setoperator("*");
+        setcurrent("");
+      }
+      //operator formular -
+      else if (value === "/") {
+        if (operator !== null) {
+          if (operator === "+") {
+            setprevious(previous + Number(current));
+          } else if (operator === "-") {
+            setprevious(previous - Number(current));
+          } else if (operator === "/") {
+            setprevious(previous / Number(current));
+          } else if (operator === "*") {
+            setprevious(previous * Number(current));
+          } else {
+            setprevious(parseFloat(current));
+          }
+        } else {
+          setprevious(parseFloat(current));
+        }
+        setoperator("/");
+        setcurrent("");
+      }
+
+      //equal formular
+      else if (value === "=") {
+        if (operator === "+") {
+          setresult((previous + Number(current)).toString());
+        } else if (operator === "-") {
+          setresult((previous - Number(current)).toString());
+        } else if (operator === "/") {
+          setresult((previous / Number(current)).toString());
+        } else if (operator === "*") {
+          setresult((previous * Number(current)).toString());
+        } else {
+          setresult(current.toString());
         }
       } else {
         setcurrent(num + value);
