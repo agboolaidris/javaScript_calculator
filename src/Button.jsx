@@ -44,7 +44,7 @@ function Button() {
     },
     {
       text: "+",
-      id: "addition",
+      id: "add",
     },
     {
       text: 1,
@@ -60,7 +60,7 @@ function Button() {
     },
     {
       text: "=",
-      id: "equal",
+      id: "equals",
     },
     {
       text: 0,
@@ -81,7 +81,7 @@ function Button() {
 
     const num = current;
 
-    if (current === 0 || "") {
+    if (current === "") {
       if (value === "+") {
         setcurrent("+");
       } else if (value === "-") {
@@ -95,6 +95,27 @@ function Button() {
         setresult(0);
         setoperator("");
         setcurrent(0);
+      } else if (value === "=") {
+        setcurrent("");
+      } else {
+        setcurrent(num + value);
+      }
+    } else if (current === 0) {
+      if (value === "+") {
+        setcurrent("+");
+      } else if (value === "-") {
+        setcurrent("-");
+      } else if (value === "*") {
+        setcurrent("");
+      } else if (value === "/") {
+        setcurrent("");
+      } else if (value === "AC") {
+        setprevious("");
+        setresult(0);
+        setoperator("");
+        setcurrent(0);
+      } else if (value === "=") {
+        setcurrent("");
       } else {
         setcurrent(num + value);
       }
@@ -107,66 +128,72 @@ function Button() {
       }
       //operator formular for +
       else if (value === "+") {
-        if (operator !== null) {
-          if (operator === "+") {
-            setprevious(previous + Number(current));
-          } else if (operator === "-") {
-            setprevious(previous - Number(-current));
-          } else if (operator === "/") {
-            if (current === "" || 0) {
-              setprevious(previous / 1);
+        if (current === "-") {
+          setcurrent("-");
+        } else if (current === "+") {
+          setcurrent("+");
+        } else {
+          if (operator !== null) {
+            if (operator === "+") {
+              setprevious(previous + Number(current));
+            } else if (operator === "-") {
+              setprevious(previous - Number(current));
+            } else if (operator === "/") {
+              if (current === "" || 0) {
+                setprevious(previous / 1);
+              } else {
+                setprevious(previous / Number(current));
+              }
+            } else if (operator === "*") {
+              if (current === "" || 0) {
+                setprevious(previous * 1);
+              } else {
+                setprevious(previous * Number(current));
+              }
             } else {
-              setprevious(previous / Number(current));
-            }
-          } else if (operator === "*") {
-            if (current === "" || 0) {
-              setprevious(previous * 1);
-            } else {
-              setprevious(previous * Number(current));
+              setprevious(parseFloat(current));
             }
           } else {
             setprevious(parseFloat(current));
           }
-        } else {
-          setprevious(parseFloat(current));
+          setcurrent("");
+          setoperator("+");
         }
-        setcurrent("");
-        setoperator("+");
       }
 
       //operator formular -
       else if (value === "-") {
-        if (operator !== null) {
-          if (operator === "+") {
-            setprevious(previous + Number(current));
-            setcurrent("");
-          } else if (operator === "-") {
-            setprevious(previous - Number(current));
-            setcurrent("");
-          } else if (operator === "/") {
-            if (current === "" || 0) {
-              setprevious(previous / 1);
+        if (current === "-") {
+          setcurrent("+");
+        } else if (current === "+") {
+          setcurrent("-");
+        } else {
+          if (operator !== null) {
+            if (operator === "+") {
+              setprevious(previous + Number(current));
+            } else if (operator === "-") {
+              setprevious(previous - Number(current));
+            } else if (operator === "/") {
+              if (current === "" || 0) {
+                setprevious(previous / 1);
+              } else {
+                setprevious(previous / Number(current));
+              }
+            } else if (operator === "*") {
+              if (current === "" || 0) {
+                setprevious(previous * 1);
+              } else {
+                setprevious(previous * Number(current));
+              }
             } else {
-              setprevious(previous / Number(current));
+              setprevious(parseFloat(current));
             }
-            setcurrent("");
-          } else if (operator === "*") {
-            if (current === "" || 0) {
-              setprevious(previous * 1);
-            } else {
-              setprevious(previous * Number(current));
-            }
-            setcurrent(num + value);
           } else {
             setprevious(parseFloat(current));
-            setcurrent("");
           }
-        } else {
-          setprevious(parseFloat(current));
           setcurrent("");
+          setoperator("-");
         }
-        setoperator("-");
-        setcurrent("");
       }
 
       //operator formular -
@@ -224,20 +251,26 @@ function Button() {
           setresult(current.toString());
         }
       } else {
-        setcurrent(num + value);
+        if (value === ".") {
+          if (!current.includes(".")) {
+            setcurrent(num + value);
+          }
+        } else {
+          setcurrent(num + value);
+        }
       }
     }
   };
 
   return (
     <>
-      <div id="display">
+      <div className="display">
         <div className="value">
           <span>{previous} </span>
           <span>{operator}</span>
           <span> {current}</span>
         </div>
-        <div className="result">{result}</div>
+        <div id="display">{result}</div>
       </div>
       <div className="panel">
         {Value.map((value) => {
